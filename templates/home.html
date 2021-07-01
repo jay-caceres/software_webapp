@@ -29,7 +29,7 @@
     <h2>REGISTER</h2>
     <form action= "{{ url_for("home") }}"  method="POST">  
         <!--<input type="text" class="input-box" placeholder="Your Name" required> -->
-        <input type="text" name="username" class="input-box" placeholder="Username" pattern="[a-zA-Z][a-zA-Z0-9-_.]{6,20}" oninvalid="this.setCustomValidity('Only letters (either case), numbers, hyphens, underscores, and periods. Length between 6-20 Characters')" onvalid="this.setCustomValidity('')" required="required">
+        <input type="text" name="username" class="input-box" placeholder="Username" pattern="[a-zA-Z][a-zA-Z0-9-_.]{6,20}" oninvalid="this.setCustomValidity('Only letters (either case), numbers, hyphens, underscores, and periods. Length between 6-20 Characters')" oninput="this.setCustomValidity('')" required="required">
         <!--Only letters (either case), numbers, hyphens, underscores, and periods. (Not the slash character, that is being used to escape the period.) The username must start with a letter and must be between 1 and 20 characters long-->
         <input type="password" name="password" class="input-box" placeholder="Password" required>
         <button type="submit" class="submit-btn">Submit</button>
