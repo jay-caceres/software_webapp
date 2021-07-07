@@ -2,62 +2,55 @@
 <html>
 <head>
     <title>Login and Registration Form</title>
+
     <link rel="stylesheet" href="main.css">
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main_jay.css') }}">
 
 
 </head>
+
 <body>
+    <div class="col-md-8">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          </div>
 <div class="container">
+    
 <div class="card">
+    
 <div class="inner-box" id="card">
+        
+      
 <div class="card-front">
     <h2>LOGIN</h2>
+    
+
     <form action="Management">
-        <input type="email" class="input-box" placeholder="Username" required>
-        <input type="password" class="input-box" placeholder="Password" required>
         
-        <button type="submit" class="submit-btn" onclick="visitPage()" >Submit</button>
-        
-        <input type="checkbox"><span>Remember Me</span>
-    </form>
-    <button type="button" class="btn" onclick="openRegister()">I'm New Here</button>
-    <a href="">Forgot Password</a>
-</div>
-<div class="card-back">
-    <h2>REGISTER</h2>
-    <form action= "{{ url_for("home") }}"  method="POST">  
-        <!--<input type="text" class="input-box" placeholder="Your Name" required> -->
-        <input type="text" name="username" class="input-box" placeholder="Username" pattern="[a-zA-Z][a-zA-Z0-9-_.]{6,20}" oninvalid="this.setCustomValidity('Only letters (either case), numbers, hyphens, underscores, and periods. Length between 6-20 Characters')" oninput="this.setCustomValidity('')" required="required">
-        <!--Only letters (either case), numbers, hyphens, underscores, and periods. (Not the slash character, that is being used to escape the period.) The username must start with a letter and must be between 1 and 20 characters long-->
-        <input type="password" name="password" class="input-box" placeholder="Password" required>
+        {{ form.hidden_tag() }}
+
+        <!--<input type="email" class="input-box" placeholder="Username" required>-->
+        {{ form.username(type="text", placeholder="Username",class="input-box")}}
+
+        <!--<input type="password" class="input-box" placeholder="Password" required>-->
+        {{ form.password(type="password", placeholder="Password",class="input-box")}}
+
         <button type="submit" class="submit-btn">Submit</button>
+        
         <input type="checkbox"><span>Remember Me</span>
     </form>
-    <button type="button" class="btn" onclick="openLogin()">I Have an Account</button>
+    <a href="register" ><button type="button" class="btn">I'm New Here</button></a>
     <a href="">Forgot Password</a>
 </div>
-</div>
-</div>
-</div>
 
-    <script>
-
-
-    var card = document.getElementById("card");
-    
-    function openRegister(){
-        card.style.transform = "rotateY(-180deg)";
-    }
-
-    function openLogin(){
-        card.style.transform = "rotateY(0deg)";
-    }
-
-
-    </script>
-    
 
 
 </body>

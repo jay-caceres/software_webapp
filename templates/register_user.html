@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+
+    <link rel="stylesheet" href="main.css">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main_jay.css') }}">
+
+
+</head>
+
+<body>
+    <div class="col-md-8">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          </div>
+<div class="container">
+    
+<div class="card">
+    
+<div class="inner-box" id="card">
+        
+<div class="card-front" name='cardback'>
+    <h2>REGISTER</h2>
+    <form  method="POST"> 
+        {{ form.hidden_tag() }}
+    
+        <!--<input type="text" class="input-box" placeholder="Your Name" required> -->
+        <!-- THIS IS THE TRUE ONE<input type="text" name="username" class="input-box" placeholder="Username" pattern="[a-zA-Z][a-zA-Z0-9-_.]{6,20}" oninvalid="this.setCustomValidity('Only letters (either case), numbers, hyphens, underscores, and periods. Length between 6-20 Characters')" oninput="this.setCustomValidity('')" required="required"> -->
+            
+        {{ form.username(type="text", placeholder="Username",class="input-box", id="username")}}
+        <ul>
+            {% for error in form.username.errors %}
+                <li style="color:red;font-size:10px;margin-left:15px" id="username_status">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        <!--Only letters (either case), numbers, hyphens, underscores, and periods. (Not the slash character, that is being used to escape the period.) The username must start with a letter and must be between 1 and 20 characters long-->
+        <!--<input type="password" name="password" class="input-box" placeholder="Password" required> -->
+        {{ form.password(type="password", placeholder="Password",class="input-box", id="password")}}
+        <ul>
+            {% for error in form.password.errors %}
+                <li style="color:red;font-size:10px;margin-left:15px">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {{ form.confirm_password(type="password", placeholder="Confirm Password",class="input-box", id=confirm_password)}}
+        <ul>
+            {% for error in form.confirm_password.errors %}
+                <li style="color:red;font-size:10px;margin-left:15px">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        <button type="submit" class="submit-btn"  >Submit</button>
+    
+        <input type="checkbox"><span>Remember Me</span>
+    </form>
+    <a href="/" ><button type="button" class="btn">I have an account</button></a>
+    <a href="#cardback">Forgot Password</a>
+    </div>
+    </div>
+    </div>
+    </div>
+    
+        <script>
+    
+    
+        var card = document.getElementById("card");
+        
+        function openRegister(){
+            card.style.transform = "rotateY(-180deg)";
+        }
+    
+        function openLogin(){
+            card.style.transform = "rotateY(0deg)";
+        }
+    
+    
+        </script>
+        
+    
+    
+    </body>
+    </html>
