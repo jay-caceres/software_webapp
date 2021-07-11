@@ -28,7 +28,19 @@
         }
         </style>
 </head>
+
 <body>
+  <div class="col-md-8">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </div>
   <header class="site-header">
     <nav class="navbar navbar-expand-md navbar-dark bg-danger fixed-top">
       <div class="container">
@@ -46,7 +58,7 @@
           <!-- Navbar Right Side -->
           <div class="navbar-nav">
             
-            <a class="nav-item nav-link" href="/login">Sign Out</a>
+            <a class="nav-item nav-link" href="{{ url_for('logout') }}">Sign Out</a>
           </div>
         </div>
       </div>

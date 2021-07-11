@@ -39,7 +39,7 @@
         {{ form.username(type="text", placeholder="Username",class="input-box", id="username")}}
         <ul>
             {% for error in form.username.errors %}
-                <li style="color:red;font-size:10px;margin-left:15px" id="username_status">{{ error }}</li>
+                <li style="position: relative;color:red;font-size:10px;margin-left:15px" id="username_status">{{ error }}</li>
             {% endfor %}
         </ul>
         <!--Only letters (either case), numbers, hyphens, underscores, and periods. (Not the slash character, that is being used to escape the period.) The username must start with a letter and must be between 1 and 20 characters long-->
@@ -47,13 +47,13 @@
         {{ form.password(type="password", placeholder="Password",class="input-box", id="password")}}
         <ul>
             {% for error in form.password.errors %}
-                <li style="color:red;font-size:10px;margin-left:15px">{{ error }}</li>
+                <li style="position: absolute;color:red;font-size:10px;margin-left:15px">{{ error }}</li>
             {% endfor %}
         </ul>
         {{ form.confirm_password(type="password", placeholder="Confirm Password",class="input-box", id=confirm_password)}}
         <ul>
             {% for error in form.confirm_password.errors %}
-                <li style="color:red;font-size:10px;margin-left:15px">{{ error }}</li>
+                <li style="position: absolute;color:red;font-size:10px;margin-left:15px">{{ error }}</li>
             {% endfor %}
         </ul>
         <button type="submit" class="submit-btn"  >Submit</button>

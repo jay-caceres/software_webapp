@@ -1,5 +1,6 @@
-from flask import Flask, render_template,url_for,request,flash,redirect
+from flask import Flask, render_template,url_for,request,flash,redirect, session
 from forms import RegistrationForm,LoginForm
+from flask_login import login_user
 app = Flask(__name__)
 
 app.config['SECRET_KEY']='df0a82e89698f516dd362744546b8e96'
@@ -10,23 +11,35 @@ def home():
     #if request.method == "POST":
         #user = request.form.get("username")
         #return user
-    form2 = LoginForm()
-    
-    
-    return render_template('home.html',form=form2)
+    form = LoginForm() #delete META after testing!!!
+    if form.validate_on_submit():
+        if form.username.data == 'admin' and form.password.data == 'admin':
+            flash('You have been logged in!', 'success')
+            session['logged_in'] = True #connect back end.. eventually use database
+            return redirect(url_for('Management'))
+        else:
+            flash("Login Unsuccessful. Please check username and password", 'danger')
+            return redirect(url_for('home'))
+    return render_template('home.html',form=form)
+
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    flash('You have been logged out!', 'danger')    
+    return redirect(url_for('home'))
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
     #if request.method == "POST":
         #user = request.form.get("username")
         #return user
-    form1 = RegistrationForm()
+    form = RegistrationForm()
     
-    if form1.validate_on_submit():
-        flash(f'Account created for {form1.username.data}!','success')
+    if form.validate_on_submit():
+        flash(f'Account created for {form.username.data}!','success')
         
         return redirect(url_for('home'))
-    return render_template('register_user.html',form=form1)
+    return render_template('register_user.html',form=form)
 
 
 @app.route("/fuelQuote")
