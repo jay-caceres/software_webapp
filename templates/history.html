@@ -19,9 +19,9 @@
     </head>
     <body>
         <header class="site-header">
-            <nav class="navbar navbar-expand-md navbar-dark bg-danger fixed-top">
+            <nav class="navbar navbar-expand-md navbar-dark bg-info fixed-top">
               <div class="container">
-                <a class="navbar-brand mr-4" href="/history">Fuel Quote History</a>
+                <a class="navbar-brand mr-4" href="/">Fuel Quote History</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
@@ -42,9 +42,10 @@
             </nav>
           </header>
           <h2>Fuel Quote History</h2>
-        <div class="col-md-6">
+        
             <div class="content-section">
                 <table style="width:100%">
+                
                     <tr>
                         <th>Gallons Requested</th>
                         <th>Delivery Address</th>
@@ -52,25 +53,18 @@
                         <th>Suggested Price/Gallon</th>
                         <th>Total Price</th>
                     </tr>
+                    {% for row in quote %}
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        </td>
+                      {% for cell in row %}
+                      <td>{{cell}}</td>
+                      {% endfor %}
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    {% endfor %}
+                    
                 </table>
             
             </div>
-        </div>
+        
 
 
 

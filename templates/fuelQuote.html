@@ -13,9 +13,9 @@
     </head>
     <body>
         <header class="site-header">
-            <nav class="navbar navbar-expand-md navbar-dark bg-danger fixed-top">
+            <nav class="navbar navbar-expand-md navbar-dark bg-info fixed-top">
               <div class="container">
-                <a class="navbar-brand mr-4" href="/fuelQuote">Fuel Quote</a>
+                <a class="navbar-brand mr-4" href="/">Fuel Quote</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
@@ -35,37 +35,72 @@
               </div>
             </nav>
           </header>
-<div class="col-md-6">
+
+
+  <div class="col-md-6">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+     
     <div class="content-section">
-        <form action="">
+        <form method="POST" action="">
+            {{form.hidden_tag() }}
+          <fieldset class="form-group">
            <div class="form-group">
-               <label for="gallonsRequested">Gallons Requested</label>
-               <input type="number" class="form-control" id="gallonsRequested" placeholder ="Enter number of gallons"> 
+               {{form.gallons_requested.label(class="form-control-label")}}
+
+                {%if form.gallons_requested.errors%}
+                    {{form.gallons_requested(class="form-control form-contrl-lg is-invalid")}}
+                    <div class= "invalid-feedback">
+                      {% for error in form.gallons_requested.errors %}
+                         <span>{{ error}} </span>
+                      {% endfor %}
+                    </div>
+                {% else %}
+                    {{form.gallons_requested(class="form-control form-contrl-lg")}}
+                {%endif%}
            </div> 
 
             <div class="form-group">
-                <label for="deliveryAddress">Delivery Address</label>
-                <input type="text" class="form-control" value="Address from profile" class="field left" readonly>
+              {{form.delivery_address.label(class="form-control-label")}}
+              {{form.delivery_address(class="form-control form-contrl-lg")}}
+               
             </div> 
 
             <div class="form-group">
-                <label for="deliveryDate">Delivery Date</label>
-                <input type="date" class="form-control" id="deliveryDate" placeholder ="Choose Delivery Date">
+              {{form.delivery_date.label(class="form-control-label")}}
+              {%if form.delivery_date.errors%}
+                  {{form.delivery_date(class="form-control form-contrl-lg is-invalid")}}
+                    <div class= "invalid-feedback">
+                       {% for error in form.delivery_date.errors %}
+                        <span>{{ error}} </span>
+                       {% endfor %}
+                    </div>
+                {% else %}
+                    {{form.delivery_date(class="form-control form-contrl-lg")}}
+                {%endif%}
             </div> 
 
             <div class="form-group">
-                <label for="deliveryDate">Suggested Price/Gallon</label>
-                <input type="number" class="form-control" value="0" class="field left" readonly>
+              {{form.price.label(class="form-control-label")}}
+              {{form.price(class="form-control form-contrl-lg")}}
 
             </div> 
 
             <div class="form-group">
-                <label for="total">Total Amount Due</label>
-                <input type="number" class="form-control" value="0" class="field left" readonly>
-            </div> 
-            <input type="submit" value="Calculate Total">
-
-        
+              {{form.total.label(class="form-control-label")}}
+              {{form.total(class="form-control form-contrl-lg")}}
+            </div>
+          </fieldset>
+          <div class="form-group">
+            {{form.submit(class="btn btn-outline-info")}}
+          </div>
         </form>
     </div>
 </div>

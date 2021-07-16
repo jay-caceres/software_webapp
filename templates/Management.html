@@ -42,7 +42,7 @@
       {% endwith %}
     </div>
   <header class="site-header">
-    <nav class="navbar navbar-expand-md navbar-dark bg-danger fixed-top">
+    <nav class="navbar navbar-expand-md navbar-dark bg-info fixed-top">
       <div class="container">
         <a class="navbar-brand mr-4" href="/Management">Home</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,6 +76,13 @@
             <th>State</th>
             <th>Zipcode</th>
           </tr>
+          {% for row in data %}
+          <tr>
+            {% for cell in row %}
+            <td>{{cell}}</td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
         </thead>
         <tbody id="ProfileInfo">
         </tbody>

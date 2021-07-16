@@ -4,6 +4,7 @@ from webapp import app
 import unittest
 from flask_testing import TestCase
 from flask import Flask, request
+import datetime
 
 
 app.config['TESTING'] = True
@@ -23,7 +24,7 @@ class FlaskTestCase(TestCase):
 
     def test_invalid_password(self): 
         #app.config['WTF_CSRF_ENABLED'] = False
-        tester = app.test_client()
+        tester = app.test_client(self)
         response = tester.post(
             '/',
             data=dict(username="admin", password="1"),
@@ -60,11 +61,23 @@ class FlaskTestCase(TestCase):
         tester = app.test_client(self)
         response = tester.post('/register',data=dict(username="admin", password="1", confirm_password="2"),follow_redirects=True)
         self.assertIn(b'Field must be equal to password.',response.data)
-        
+
     def test_valid_registration(self):   
         tester = app.test_client(self)
         response = tester.post('/register',data=dict(username="admin", password="admin", confirm_password="admin"),follow_redirects=True)
         self.assertIn(b'Account created for',response.data)
+    #INFORMATION REGISTRATION
+   
+
+    def test_valid_information_registration(self):
+        tester = app.test_client(self)
+        response = tester.post('/Registration',data=dict(fullname="Jane Doe", address1="1234 Street Road", address2="", city="Houston", state="TX", zipcode="77469"), follow_redirects=True)
+        self.assertIn(b'Information registered',response.data)
+
+    def test_valid_quote_form(self):
+        tester = app.test_client(self)
+        response = tester.post('/fuelQuote',data=dict(gallons_requested=3,delivery_date=datetime.date(2020, 1, 1)), follow_redirects=True)
+        self.assertIn(b'Quote Received Successfully!',response.data)
 
 
 if __name__ == '__main__':
