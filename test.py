@@ -1,14 +1,15 @@
 
-from forms import LoginForm
+from webapp.forms import LoginForm
 from webapp import app
 import unittest
 from flask_testing import TestCase
 from flask import Flask, request
 import datetime
 
-
 app.config['TESTING'] = True
 app.config['WTF_CSRF_ENABLED'] = False
+
+
 class FlaskTestCase(TestCase):
     def create_app(self):
 

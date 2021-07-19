@@ -1,9 +1,9 @@
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField,IntegerField, TextAreaField, DecimalField
-from wtforms.validators import DataRequired, Length, Email, EqualTo,NumberRange,Optional
+from wtforms.validators import DataRequired, Length, Email, EqualTo,NumberRange,Optional,ValidationError
 from wtforms.fields.html5 import DateField
-
+from webapp.models import User
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username',
@@ -14,6 +14,10 @@ class RegistrationForm(FlaskForm):
                                      validators=[DataRequired(), EqualTo('password')])
     #submit = SubmitField('Submit')
 
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError('That username is taken. Please choose a different one.')
 
 class LoginForm(FlaskForm):
     username = StringField('Username',
@@ -23,7 +27,7 @@ class LoginForm(FlaskForm):
 
 class RegisterForm(FlaskForm):
     states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
-    fullname = StringField('fullname', validators=[DataRequired(),Length(min=2, max=20)])
+    fullname = StringField('fullname', validators=[DataRequired(),Length(min=2, max=30)])
     address1 = StringField('address1', validators=[DataRequired()])
     address2 = StringField('address2')
     city = StringField('city', validators=[DataRequired()])
