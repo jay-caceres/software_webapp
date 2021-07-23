@@ -53,13 +53,23 @@
                         <th>Suggested Price/Gallon</th>
                         <th>Total Price</th>
                     </tr>
+                    
                     {% for row in quote %}
                     <tr>
-                      {% for cell in row %}
-                      <td>{{cell}}</td>
-                      {% endfor %}
+                      <td>{{row.gallons_requested}}</td> 
+                      <td>{{row.delivery_address}}</td>
+                      <td>{{row.delivery_date}}</td>
+                      <td>{{row.price_per_gallon}}</td>
+                      <td>{{row.total}}</td>
+
+                      
+                      
                     </tr>
                     {% endfor %}
+                    
+
+                    
+                    
                     
                 </table>
             

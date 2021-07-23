@@ -76,13 +76,11 @@
             <th>State</th>
             <th>Zipcode</th>
           </tr>
-          {% for row in data %}
           <tr>
-            {% for cell in row %}
-            <td>{{cell}}</td>
+            {% for i in data %}
+              <th>{{i}}</th>
             {% endfor %}
           </tr>
-          {% endfor %}
         </thead>
         <tbody id="ProfileInfo">
         </tbody>

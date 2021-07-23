@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField,IntegerField, TextAreaField, DecimalField
 from wtforms.validators import DataRequired, Length, Email, EqualTo,NumberRange,Optional,ValidationError
 from wtforms.fields.html5 import DateField
-from webapp.models import User
+from webapp.models import User, Registered_user
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username',
@@ -35,9 +35,10 @@ class RegisterForm(FlaskForm):
     zipcode = StringField('zipcode', validators=[DataRequired()])
 
 class FuelQuoteForm(FlaskForm):
+    #temp = Registered_user.query.get(1).address1
     gallons_requested = IntegerField('Gallons Requested', 
                         validators=[DataRequired(),NumberRange(min=0, message='Gallons need to be positive')])
-    delivery_address = StringField('Delivery Address', validators = [Optional()],render_kw={'readonly': True})
+    delivery_address = StringField('Delivery Address',default='', validators = [Optional()],render_kw={'readonly': True})
     delivery_date = DateField('Delivery Date',validators=[DataRequired()])
     price = DecimalField('Suggested Price/Gallon',validators = [Optional()] ,render_kw={'readonly': True})
     total = DecimalField("Total Amount Due", validators = [Optional()],render_kw={'readonly': True})
