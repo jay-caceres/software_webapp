@@ -3,8 +3,9 @@
     <head>
          <!-- Required meta tags -->
     <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <script type=text/javascript src="{{url_for('static', filename='app.js') }}"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
@@ -63,7 +64,7 @@
                       {% endfor %}
                     </div>
                 {% else %}
-                    {{form.gallons_requested(class="form-control form-contrl-lg")}}
+                    {{form.gallons_requested(class="form-control form-contrl-lg", id="gals_req")}}
                 {%endif%}
            </div> 
 
@@ -93,13 +94,15 @@
 
             </div> 
 
-            <div class="form-group">
+            <div class="form-group" id="total">
               {{form.total.label(class="form-control-label")}}
-              {{form.total(class="form-control form-contrl-lg")}}
+              {{form.total(class="form-control form-contrl-lg", id="tot")}}
             </div>
           </fieldset>
           <div class="form-group">
-            {{form.get_quote(class="btn btn-outline-info")}}
+            
+            {{form.get_quote(class="btn btn-outline-info", value="Get Quote")}}
+
           </div>
           <div class="form-group">
             {{form.submit(class="btn btn-outline-info")}}

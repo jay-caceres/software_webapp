@@ -29,7 +29,7 @@ class Registered_user(db.Model):
     zipcode = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return f"Registered_user('{self.fullname}')"
+        return f"Registered_user('{self.fullname}',{self.state})"
 
 class Fuel_quote(db.Model):
     id = db.Column(db.Integer, primary_key=True)
