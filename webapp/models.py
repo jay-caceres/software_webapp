@@ -36,8 +36,8 @@ class Fuel_quote(db.Model):
     number_of_gallons = db.Column(db.Integer,nullable = False)
     delivery_address= db.Column(db.String(120),db.ForeignKey('registered_user.address1'), nullable = False)
     delivery_date = db.Column(db.Date, nullable=False)
-    price_per_gallon=db.Column(db.Integer, nullable=False)
-    total = db.Column(db.Integer, nullable=False)
+    price_per_gallon=db.Column(db.Numeric(10,2), nullable=False)
+    total = db.Column(db.Numeric(10,2), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id') ,nullable=False)
 
     def __repr__(self):

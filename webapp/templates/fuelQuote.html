@@ -70,7 +70,7 @@
 
             <div class="form-group">
               {{form.delivery_address.label(class="form-control-label")}}
-              {{form.delivery_address(class="form-control form-contrl-lg")}}
+              {{form.delivery_address(class="form-control form-contrl-lg", id="date")}}
                
             </div> 
 
@@ -90,22 +90,22 @@
 
             <div class="form-group">
               {{form.price.label(class="form-control-label")}}
-              {{form.price(class="form-control form-contrl-lg")}}
+              {{form.price(value=price,class="form-control form-contrl-lg", id="price")}}
 
             </div> 
 
             <div class="form-group" id="total">
               {{form.total.label(class="form-control-label")}}
-              {{form.total(class="form-control form-contrl-lg", id="tot")}}
+              {{form.total(value=total,class="form-control form-contrl-lg", id="tot")}}
             </div>
           </fieldset>
           <div class="form-group">
             
-            {{form.get_quote(class="btn btn-outline-info", value="Get Quote")}}
+            {{form.get_quote(class="btn btn-outline-info", value="Get Quote", id='quote')}}
 
           </div>
           <div class="form-group">
-            {{form.submit(class="btn btn-outline-info")}}
+            {{form.submit(class="btn btn-outline-info", id="sub", disabled='disabled')}}
           </div>
         </form>
     </div>

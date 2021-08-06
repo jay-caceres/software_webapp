@@ -50,6 +50,9 @@ class FlaskTestCase(TestCase):
         response = self.client.post('/register',data=dict(username="admin", password="admin", confirm_password="admin"),follow_redirects=True)
         self.assertIn(b'Account created for',response.data)
 
+    def test_valid_information_registration(self):
+        response = self.client.post('/Registration',data=dict(fullname="Jane Doe", address1="1234 Street Road", address2="", city="Houston", state="TX", zipcode="77469"), follow_redirects=True)
+        self.assertIn(b'Information registered',response.data)
 
     def test_user_indb(self):
         user = User(username='admin', password='admin')
@@ -88,18 +91,23 @@ class FlaskTestCase(TestCase):
     #INFORMATION REGISTRATION
    
 
-    def test_valid_information_registration(self):
-        response = self.client.post('/Registration',data=dict(fullname="Jane Doe", address1="1234 Street Road", address2="", city="Houston", state="TX", zipcode="77469"), follow_redirects=True)
-        self.assertIn(b'Information registered',response.data)
+    def test_valid_get_quote_form(self):        
+        self.client.post('/Registration',data=dict(fullname="Jane Doe", address1="1234 Street Road", address2="", city="Houston", state="TX", zipcode="77469"), follow_redirects=True)
 
-    def test_valid_quote_form(self):
-        response = self.client.post('/fuelQuote',data=dict(gallons_requested=3,delivery_date=datetime.date(2020, 1, 1)), follow_redirects=True)
+        response = self.client.post('/fuelQuote',data=dict(gallons_requested=3,delivery_date=datetime.date(2021, 9, 10), get_quote=True), follow_redirects=True)
+        self.assertIn(b'Quote',response.data)
+
+    def test_valid_quote_form(self):        
+        self.client.post('/Registration',data=dict(fullname="Jane Doe", address1="1234 Street Road", address2="", city="Houston", state="TX", zipcode="77469"), follow_redirects=True)
+        self.client.post('/fuelQuote',data=dict(gallons_requested=3,delivery_date=datetime.date(2021, 9, 10), get_quote=True), follow_redirects=True)
+        response = self.client.post('/fuelQuote',data=dict(gallons_requested=3,delivery_date=datetime.date(2021, 9, 10), price = 1,total=2,submit=True), follow_redirects=True)
         self.assertIn(b'Quote Received Successfully!',response.data)
 
     def tearDown(self): 
 
         db.session.remove()
         db.drop_all()
+        db.create_all()
 
 
 if __name__ == '__main__':

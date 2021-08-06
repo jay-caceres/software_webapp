@@ -4,6 +4,8 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, Selec
 from wtforms.validators import DataRequired, Length, Email, EqualTo,NumberRange,Optional,ValidationError
 from wtforms.fields.html5 import DateField
 from webapp.models import User, Registered_user
+from wtforms_components import DateRange
+from datetime import date
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username',
@@ -39,7 +41,7 @@ class FuelQuoteForm(FlaskForm):
     gallons_requested = IntegerField('Gallons Requested', 
                         validators=[DataRequired(),NumberRange(min=0, message='Gallons need to be positive')])
     delivery_address = StringField('Delivery Address',default='', validators = [Optional()],render_kw={'readonly': True})
-    delivery_date = DateField('Delivery Date',validators=[DataRequired()])
+    delivery_date = DateField('Delivery Date',validators=[DataRequired(), DateRange(min=date.today())])
     price = DecimalField('Suggested Price/Gallon',validators = [Optional()] ,render_kw={'readonly': True})
     total = DecimalField("Total Amount Due", validators = [Optional()],render_kw={'readonly': True})
     #NEW 

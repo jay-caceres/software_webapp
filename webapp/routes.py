@@ -66,9 +66,6 @@ def fuelQuote():
         return redirect(url_for('Management'))
 
     
-    total = 0
-    per = 0
-    form.total.data = total
     form.delivery_address.data = registered_user.address1 # Insert Address INTO READONLY FORMFIELD
     if form.validate_on_submit(): #PRICE MODULE
         if form.get_quote.data:
@@ -98,15 +95,14 @@ def fuelQuote():
             margin = (location_factor-history_factor+gals_factor+company_profit) * 1.5
             suggested_price_per_gal = margin+1.50
             total = gals*suggested_price_per_gal
-            total = float(total)
             form.total.data = total
             print(total)
-            return render_template('fuelQuote.html', form=form)
+            return render_template('fuelQuote.html', form=form, price=suggested_price_per_gal, total=total)
 
         elif form.submit.data:
             clientquote = Fuel_quote.query.filter_by(user_id=userid).first()
             quote = Fuel_quote(number_of_gallons=form.gallons_requested.data, delivery_address = registered_user.address1 +" "+ registered_user.address2,
-                        delivery_date = form.delivery_date.data, price_per_gallon = 1, total = 0, user_id = userid)#using global userid
+                        delivery_date = form.delivery_date.data, price_per_gallon = form.price.data, total = form.total.data, user_id = userid)#using global userid
             db.session.add(quote)
             db.session.commit()
             print('Hello')
@@ -161,41 +157,3 @@ def Management():
 
 
     return render_template('Management.html', data=data)
-
-
-def update():
-
-    #member = Member.query.filter_by(id=request.form['id']).first()
-    #member.name = request.form['name']
-    #member.email = request.form['email']
-    #member.random = randint(1,10000)
-
-    #db.session.commit()
-
-    #location factor (.02 for TX, .04 otherwise)
-    r_user = Registered_user.query.filter_by(user_id=request.form['user_id'])
-    if r_user.state == "TX":
-        location_factor = .02
-    else:
-        location_factor= .04
-    #fuel history (.01 if history, 0 otherwise) QUERY FOR THIS
-    fuel_user = Fuel_quote.query.filter_by(user_id=request.form['user_id']).all()
-    if len(fuel_user) >= 1:
-        history_factor = .01
-    else:
-        history_factor = 0
-    
-    #gallons requested (.02 > 1000, .03 if less)
-    gals = request.form['gallons_requested']
-    if gals > 1000:
-        gals_factor = .02
-    else:
-        gals_factor = .03
-    #static company profit (.1)
-    company_profit = .1
-
-    margin = (location_factor-history_factor+gals_factor+company_profit) * 1.5
-    suggested_price_per_gal = margin+1.50
-    total = gals*suggested_price_per_gal
-
-    return total
