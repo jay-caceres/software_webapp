@@ -120,8 +120,15 @@ def history():
 @app.route("/Registration",methods=["GET", "POST"])
 def Registration():
     form = RegisterForm()
+    registered_user = Registered_user.query.filter_by(user_id=userid).first()
+    if registered_user is not None:
+        form.fullname.data = registered_user.fullname
+        form.address1.data = registered_user.address1
+        form.address2.data = registered_user.address2
+        form.city.data = registered_user.city
+        form.state.data = registered_user.state
+        form.zipcode.data = registered_user.zipcode
     if form.validate_on_submit():
-        registered_user = Registered_user.query.filter_by(user_id=userid).first()
         if registered_user is None:
             registered_user = Registered_user(user_id=userid, fullname=form.fullname.data, address1=form.address1.data, address2=form.address2.data, city=form.city.data, state=form.state.data, zipcode=form.zipcode.data)
             db.session.add(registered_user)
