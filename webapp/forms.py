@@ -29,12 +29,12 @@ class LoginForm(FlaskForm):
 
 class RegisterForm(FlaskForm):
     states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
-    fullname = StringField('fullname', validators=[DataRequired(),Length(min=2, max=30)])
-    address1 = StringField('address1', validators=[DataRequired()])
-    address2 = StringField('address2')
-    city = StringField('city', validators=[DataRequired()])
+    fullname = StringField('fullname', validators=[DataRequired(),Length(min=2, max=50)])
+    address1 = StringField('address1', validators=[DataRequired(),Length(max=100)])
+    address2 = StringField('address2', validators=[Length(max=100)])
+    city = StringField('city', validators=[DataRequired(),Length(max=100)])
     state = SelectField('state', choices=states, validators=[DataRequired()])
-    zipcode = StringField('zipcode', validators=[DataRequired()])
+    zipcode = StringField('zipcode', validators=[DataRequired(),Length(min=5, max=9)])
 
 class FuelQuoteForm(FlaskForm):
     #temp = Registered_user.query.get(1).address1
