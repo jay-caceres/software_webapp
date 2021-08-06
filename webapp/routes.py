@@ -56,21 +56,25 @@ def register():
 
 @app.route("/fuelQuote", methods=['GET', 'POST'])
 def fuelQuote():
-    client =Registered_user.query.all()
-    deliveryAddress = Registered_user.query.get(1).address1
+    
     form = FuelQuoteForm()
     if form.validate_on_submit():
-        quote = Fuel_quote(number_of_gallons=form.gallons_requested.data, delivery_address = deliveryAddress, 
-                    delivery_date = form.delivery_date.data, price_per_gallon = 3, total = 0, user_id = 1)
+        registered_user = Registered_user.query.filter_by(user_id=userid).first() #TO GET ADDRESSES
+        clientquote = Fuel_quote.query.filter_by(user_id=userid).first()
+        quote = Fuel_quote(number_of_gallons=form.gallons_requested.data, delivery_address = registered_user.address1 +" "+ registered_user.address2,
+                    delivery_date = form.delivery_date.data, price_per_gallon = 3, total = 0, user_id = userid)#using global userid
         db.session.add(quote)
         db.session.commit()
         flash(f'Quote Received Successfully!', 'success')
-        return redirect(url_for('Management'))
+        return redirect(url_for('fuelQuote'))
+    
     return render_template('fuelQuote.html', form=form)
 
 @app.route("/history")
 def history():
-    quote = Fuel_quote.query.all()
+    registered_user = Fuel_quote.query.filter_by(user_id=userid).first()
+    quote = registered_user.query.all()
+    
     return render_template('history.html',quote=quote)
 
 @app.route("/Registration",methods=["GET", "POST"])
@@ -113,3 +117,4 @@ def Management():
 
 
     return render_template('Management.html', data=data)
+    

@@ -55,17 +55,20 @@
                     </tr>
                     
                     {% for row in quote %}
+                    
                     <tr>
-                      <td>{{row.gallons_requested}}</td> 
+                      <td>{{row.number_of_gallons}}</td> 
                       <td>{{row.delivery_address}}</td>
                       <td>{{row.delivery_date}}</td>
                       <td>{{row.price_per_gallon}}</td>
                       <td>{{row.total}}</td>
+                      <td>{{row.user_id}}</td>
 
                       
                       
                     </tr>
                     {% endfor %}
+                    
                     
 
                     

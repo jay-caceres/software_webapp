@@ -42,4 +42,6 @@ class FuelQuoteForm(FlaskForm):
     delivery_date = DateField('Delivery Date',validators=[DataRequired()])
     price = DecimalField('Suggested Price/Gallon',validators = [Optional()] ,render_kw={'readonly': True})
     total = DecimalField("Total Amount Due", validators = [Optional()],render_kw={'readonly': True})
-    submit = SubmitField("Calculate Total")
+    #NEW 
+    get_quote = SubmitField("Get Quote")
+    submit = SubmitField("Submit Quote")
